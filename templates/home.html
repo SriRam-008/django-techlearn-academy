@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TechLearn Academy</title>
+  </head>
+  <body>
+    <ul style="list-style: none;display: flex;">
+        <li style="margin-left: 15px;"><a href="{% url 'courses' %}">View Courses</a> |</li>
+        <li style="margin-left: 15px;"><a href="{% url 'trainers' %}">View Trainers</a> |</li>
+        <li style="margin-left: 15px;"><a href="{% url 'students' %}"> View Students</a></li>
+    </ul>
+    <center>
+      <h1>Welcome to Our TechLearn Academy</h1>
+      <h2>Total Available Courses: {{total_courses}}</h2>
+      <h2>Total Available Trainers: {{total_trainers}}</h2>
+      <h2>Total Students Currently Studying: {{total_students}}</h2>
+    </center>
+  </body>
+</html>

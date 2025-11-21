@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <a href="{% url 'home' %}">Back to Home</a>
+    <center>
+        <h1>Total Available Courses</h1>
+        <br>
+        <table border="1">
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>COURSE NAME</th>
+                <th>IMAGE</th>
+                <th>DESCRIPTION</th>
+                <th>DURATION</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for course in  courses%}
+                <tr>
+                    <td>{{course.id}}</td>
+                    <td>{{course.course_name}}</td>
+                    <td><img src="{{course.course_image.url}}" style="width: 80px;height: 80px;"></td>
+                    <td>{{course.description}}</td>
+                    <td>{{course.duration}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </center>
+</body>
+</html>
