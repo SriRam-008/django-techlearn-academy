@@ -1,40 +1,68 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Courses</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+
 <body>
-    <a href="{% url 'home' %}">Back to Home</a>
     <center>
+        <ul style="list-style: none; ">
+            <li>
+                <a href="{% url 'home' %}">Back to Home</a>
+            </li>
+            {% if perms.academy.add_coursemodel %}
+            <li style="margin-top: 10px;">
+                <a href="{% url 'addcourse' %}">Add Course</a>
+            </li>
+            {% endif %}
+        </ul>
         <h1>Total Available Courses</h1>
         <br>
         <table border="1">
             <thead>
                 <tr>
-                <th>ID</th>
-                <th>COURSE NAME</th>
-                <th>IMAGE</th>
-                <th>DESCRIPTION</th>
-                <th>DURATION</th>
+                    <th>ID</th>
+                    <th>COURSE NAME</th>
+                    <th>IMAGE</th>
+                    <th>DESCRIPTION</th>
+                    <th>DURATION</th>
+                    <th>ACTION</th>
                 </tr>
             </thead>
 
             <tbody>
-                {% for course in  courses%}
+                {% for course in courses%}
                 <tr>
                     <td>{{course.id}}</td>
                     <td>{{course.course_name}}</td>
                     <td><img src="{{course.course_image.url}}" style="width: 80px;height: 80px;"></td>
                     <td>{{course.description}}</td>
                     <td>{{course.duration}}</td>
+                    <td>
+                        <div>
+                            <a href="{% url 'coursedetails' course.id %}" style="color: rgb(24, 113, 196);"><i
+                                    class="fa fa-eye"></i></a>
+                            {% if perms.academy.change_coursemodel%}
+                            <a href="{% url 'updatecourse' course.id %}"><i class="fa fa-edit"
+                                    style="color: rgb(24, 113, 196);"></i></a>
+                            {% endif %}
+                            {% if perms.academy.delete_coursemodel%}
+                            <a href="{% url 'deletecourse' course.id %}"><i class="fa fa-trash"
+                                    style="color: rgb(24, 113, 196);"></i></a>
+                            {% endif %}
+                        </div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </center>
 </body>
+
 </html>

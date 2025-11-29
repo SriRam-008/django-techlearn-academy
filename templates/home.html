@@ -9,7 +9,14 @@
     <ul style="list-style: none;display: flex;">
         <li style="margin-left: 15px;"><a href="{% url 'courses' %}">View Courses</a> |</li>
         <li style="margin-left: 15px;"><a href="{% url 'trainers' %}">View Trainers</a> |</li>
-        <li style="margin-left: 15px;"><a href="{% url 'students' %}"> View Students</a></li>
+        <li style="margin-left: 15px;"><a href="{% url 'students' %}"> View Students</a> |</li>
+        {% if not user.is_authenticated %}
+        <li style="margin-left: 15px;"><a href="{% url 'register' %}"> Register</a> |</li>
+        <li style="margin-left: 15px;"><a href="{% url 'login' %}"> Login</a></li>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <li style="margin-left: 15px;"><a href="{% url 'logout' %}"> Logout</a></li>
+        {% endif %}
     </ul>
     <center>
       <h1>Welcome to Our TechLearn Academy</h1>

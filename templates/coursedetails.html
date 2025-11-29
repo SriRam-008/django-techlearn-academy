@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+  <body>
+    <center>
+    <h1>Course Detail Page - {{course.course_name}}</h1>
+    <br>
+    <img src="{{course.course_image.url}}" alt="{{course.course_name}} Image" style="width: 200px;height: 200px;">
+    <p>Name:{{course.course_name}}</p>
+    <p>Discription:{{course.description}}</p>
+    <p>Duration:{{course.duration}}</p>
+    </center>
+  </body>
+</html>

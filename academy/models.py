@@ -15,7 +15,7 @@ class TrainerModel(models.Model):
     last_name = models.CharField(max_length=25)
     email = models.EmailField(unique=True)
     expertise = models.CharField(max_length=20)
-    trainer_photo = models.ImageField(upload_to='trainers/', blank=True, null=True)
+    trainer_photo = models.ImageField(upload_to='trainers/', default='default.jpg')
 
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
@@ -36,3 +36,4 @@ class StudentModel(models.Model):
     
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+    

@@ -1,42 +1,70 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Students</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <a href="{% url 'home' %}">Back to Home</a>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
     <center>
-        <h1>Total Available Students</h1>
-        <br>
-        <table border="1" >
-            <thead>
-                <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>EMAIL</th>
-                <th>ENROLLED COURSE</th>
-                <th>TRAINER</th>
-                <th>ACTIVE OR NOT</th>
-                </tr>
-            </thead>
+      <ul style="list-style: none; ">
+        <li >
+          <a href="{% url 'home' %}">Back to Home</a>
+        </li>
+        {% if perms.academy.add_studentmodel %}
+        <li style="margin-top: 10px;">
+          <a href="{% url 'addstudent' %}">Add Student</a>
+        </li>
+        {% endif %}
+      </ul>
 
-            <tbody>
-                {% for student in  students%}
-                <tr>
-                    <td>{{student.id}}</td>
-                    <td>{{student.full_name}}</td>
-                    <td>{{student.email}}</td>
-                    <td>{{student.enrolled_course}}</td>
-                    <td>{{student.trainer}}</td>
-                    <td>{% if student.is_active %} Yes {% else %} No {% endif %}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+      <h1>Total Available Students</h1>
+      <br />
+      <table border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>EMAIL</th>
+            <th>ENROLLED COURSE</th>
+            <th>TRAINER</th>
+            <th>ACTIVE OR NOT</th>
+            {% if perms.academy.view_studentmodel%}<th>ACTION</th>{% endif %}
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for student in students%}
+          <tr>
+            <td>{{student.id}}</td>
+            <td>{{student.full_name}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.enrolled_course}}</td>
+            <td>{{student.trainer}}</td>
+            <td>{% if student.is_active %} Yes {% else %} No {% endif %}</td>
+            {% if perms.academy.view_studentmodel%}
+            <td>
+              <div >
+                <a href="{% url 'studentdetails' student.id %} " style="color: rgb(24, 113, 196);"><i class="fa fa-eye"></i></a>
+                {% if perms.academy.change_studentmodel%}
+                <a href="{% url 'updatestudent' student.id %}" style="color: rgb(24, 113, 196);"><i class="fa fa-edit"></i></a>
+                {% endif %}
+                {% if perms.academy.delete_studentmodel%}
+                <a href="{% url 'deletestudent' student.id %}" style="color: rgb(24, 113, 196);"><i class="fa fa-trash"></i></a>
+                {% endif %}
+              </div>
+            </td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </center>
-</body>
+  </body>
 </html>

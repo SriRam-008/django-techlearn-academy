@@ -6,13 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trainers</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <a href="{% url 'home' %}">Back to Home</a>
     <center>
+        <ul style="list-style: none; ">
+        <li >
+          <a href="{% url 'home' %}">Back to Home</a>
+        </li>
+        {% if perms.academy.add_trainermodel %}
+        <li style="margin-top: 10px;">
+          <a href="{% url 'addtrainer' %}">Add Trainer</a>
+        </li>
+        {% endif %}
+      </ul>
         <h1>Total Available Trainers</h1>
         <br>
-        <table border="1">
+        <table>
             <thead>
                 <tr>
                 <th>ID</th>
@@ -20,6 +30,7 @@
                 <th>IMAGE</th>
                 <th>EMAIL</th>
                 <th>EXPERTISE</th>
+                {% if perms.academy.view_trainermodel%}<th>ACTION</th>{% endif %}
                 </tr>
             </thead>
 
@@ -28,9 +39,22 @@
                 <tr>
                     <td>{{trainer.id}}</td>
                     <td>{{trainer.full_name}}</td>
-                    <td><img src="{{trainer.trainer_photo.url}}" style="width: 80px;height: 80px;"></td>
+                    <td><img src="{{trainer.trainer_photo.url}}" alt="{{trainer.full_name}} Image" style="width: 80px;height: 80px;"></td>
                     <td>{{trainer.email}}</td>
                     <td>{{trainer.expertise}}</td>
+                    {% if perms.academy.view_trainermodel%}
+                    <td>
+                        <div>
+                            <a href="{% url 'trainerdetails' trainer.id %}" style="color: rgb(24, 113, 196);"><i class="fa fa-eye"></i></a>
+                            {% if perms.academy.change_trainermodel%}
+                            <a href="{% url 'updatetrainer' trainer.id %}"><i class="fa fa-edit" style="color: rgb(24, 113, 196);"></i></a>
+                            {% endif %}
+                            {% if perms.academy.delete_trainermodel%}
+                            <a href="{% url 'deletetrainer' trainer.id %}"><i class="fa fa-trash" style="color: rgb(24, 113, 196);"></i></a>
+                            {% endif %}
+                        </div>
+                    </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>
